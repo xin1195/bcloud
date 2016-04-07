@@ -6,7 +6,7 @@ import tornado.web
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 
-DB_CONNECT_STRING = 'mysql://root:bestom123456@112.74.16.96/bcloudTest?charset=utf8'
+DB_CONNECT_STRING = 'mysql://root:*****@localhost/bcloud?charset=utf8'
 engine = create_engine(DB_CONNECT_STRING, echo=True)
 # engine = create_engine(DB_CONNECT_STRING)
 DB_Session = sessionmaker(bind=engine)
