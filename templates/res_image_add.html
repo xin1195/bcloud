@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+
+{% block title%}
+图片资源
+{% end %}
+
+
+{% block content %}
+    <ol class="breadcrumb">
+        <li><a href="/res">资源管理</a></li>
+        <li><a href="/res/image">图片资源</a></li>
+        <li class="active">图片资源上传</li>
+    </ol>
+    <br>
+    <div role="tabpanel" class="tab-pane active" id="image_div">
+        <p>图片上传一次最多上传20张</p>
+        <input id="image_upload" name="file" type="file" multiple class="file-loading">
+    </div>
+
+{% end %}
+
+{% block bottom-js %}
+    <script src="/static/plugins/bootstrap-fileinput/js/fileinput.js"></script>
+    <script src="/static/plugins/bootstrap-fileinput/js/plugins/canvas-to-blob.js"></script>
+    <script src="/static/plugins/bootstrap-fileinput/js/fileinput_locale_zh.js"></script>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#image_upload").fileinput({
+                type: 'POST',
+                uploadUrl: "/res/image/add", // server upload action
+                uploadAsync: true,
+                language: 'zh',
+                maxFileSize: 8000,
+                maxFileCount: 20,
+            });
+            function getCookie(name) {
+                var c = document.cookie.match("\\b" + name + "=([^;]*)\\b");
+                return c ? c[1] : undefined;
+            }
+            var upload_files = [];
+            $('#image_upload').on('fileuploaded', function (event, data, previewId, index) {
+                var form = data.form,  files = data.files, extra = data.extra,response = data.response, reader = data.reader;
+                console.log(response);
+                upload_files.push(response.uploaded_file_path);
+            });
+        });
+    </script>
+{% end %}
+

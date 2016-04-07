@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+
+{% block title%}
+公司管理
+{% end %}
+
+{% block content %}
+<ol class="breadcrumb">
+    <li><a href="/fra/com">公司管理</a></li>
+    <li class="active">公司列表</li>
+</ol>
+<a class="btn btn-link" href="/fra/com/add" role="button">注册公司</a>
+
+<table class="table table-striped table-hover">
+    <tr class="success">
+        <th> #</th>
+        <th>公司名称</th>
+        <th>公司代码</th>
+        <th>公司地址</th>
+        <th>母公司代码</th>
+        <th>新建时间</th>
+        <th>删除</th>
+    </tr>
+    {% for company in companys %}
+    <tr>
+        <td>{{ companys.index(company)+1 }}</td>
+        <td><a href="/fra/com/update?code={{ company.code }}">{{ company.name }}</a></td>
+        <td>{{ company.code }}</td>
+        <td>{{ company.address }}</td>
+        <td>{{ company.parent }}</td>
+        <td>{{ company.data }}</td>
+        <td><a href="/fra/com/delete?code={{ company.code }}">删除</a></td>
+    </tr>
+    {% end %}
+</table>
+
+{% end %}

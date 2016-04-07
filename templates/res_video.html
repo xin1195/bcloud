@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% block title%}
+视频资源
+{% end %}
+
+
+{% block content %}
+<ol class="breadcrumb">
+    <li><a href="/res">资源管理</a></li>
+    <li class="active">视频资源</li>
+</ol>
+<a class="btn btn-link" href="/res/video/add" role="button">视频上传</a>
+<table class="table table-striped table-hover">
+    <tr class="success">
+        <th> #</th>
+        <th>视频名称</th>
+        <th>视频备注</th>
+        <th>新增时间</th>
+        <th>删除</th>
+    </tr>
+    {% if video_resources %}
+        {% for video_resource in video_resources %}
+        <tr>
+            <td> {{ video_resources.index(video_resource)+1 }}</td>
+            <td><a href="/res/video/detail?id={{video_resource.id}}">{{ video_resource.name }}</a></td>
+            <td data-toggle="tooltip" title="{{ video_resource.memo }}">{{ video_resource.memo[0:32] }}</td>
+            <td>{{ video_resource.data }}</td>
+            <td><a href="/res/video/delete?id={{video_resource.id}}">删除</a></td>
+        </tr>
+        {% end %}
+    {% else %}
+          <tr>
+              <td colspan="8">抱歉，没有未审批的广告机</td>
+          </tr>
+    {% end %}
+</table>
+{% end %}

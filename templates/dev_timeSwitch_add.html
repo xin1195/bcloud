@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block title%}
+定时开关机
+{% end %}
+
+
+{% block content %}
+<ol class="breadcrumb">
+    <li><a href="/dev">广告机</a></li>
+    <li class="active">定时开关机</li>
+</ol>
+<br>
+<form id="companyForm" action="{{ action }}" method="post" class="form-horizontal">
+    {% raw xsrf_form_html() %}
+    <input class="hidden" value="{{device_time_switch.id}}" name="device_time_switch_id"/>
+    <div class="form-group">
+        <label class="col-lg-2 control-label">定时开关机名 </label>
+        <div class="col-lg-5">
+            <input type="text" class="form-control" name="name" placeholder="开关机名" value="{{device_time_switch.name}}" maxlength="32"/>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-lg-2 control-label"></label>
+        <div class="col-lg-5">
+            <button class="btn btn-success  btn-block" type="submit">
+                <b>保存</b>
+            </button>
+        </div>
+    </div>
+</form>
+{% end %}

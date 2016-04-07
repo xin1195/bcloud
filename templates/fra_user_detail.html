@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+
+{% block title%}
+人员管理
+{% end %}
+
+
+{% block content %}
+<ol class="breadcrumb">
+    <li><a href="/fra/user">人员管理</a></li>
+    <li class="active">修改</li>
+</ol>
+{% if err  %}
+<div class="alert alert-warning alert-dismissible" role="alert">
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+    <strong>Warning!</strong> {{ err }}
+</div>
+{% end %}
+<br>
+<form id="companyForm" action="/fra/user/update" method="post" class="form-horizontal">
+    {% raw xsrf_form_html() %}
+    <input type="hidden" name="id" value="{{user.id}}">
+    <div class="form-group">
+        <label class="col-lg-2 control-label">用户名 </label>
+        <div class="col-lg-5">
+            <input type="text" class="form-control" name="username" placeholder="用户名" maxlength="32" value="{{user.username}}"/>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-lg-2 control-label">密码 </label>
+        <div class="col-lg-5">
+            <input type="password" class="form-control" name="password" placeholder="密码" maxlength="64"/>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-lg-2 control-label">邮箱 </label>
+        <div class="col-lg-5">
+            <input type="email" class="form-control" name="email" placeholder="邮箱" value="{{user.email}}" maxlength="32"/>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-lg-2 control-label">电话号码 </label>
+        <div class="col-lg-5">
+            <input type="text" class="form-control" maxlength="11" name="tell_phone" placeholder="电话号码" value="{{user.tell_phone}}"/>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-lg-2 control-label">公司代码 </label>
+        <div class="col-lg-5">
+            <input type="text" class="form-control" name="company_id" readonly placeholder="公司代码" value="{{user.company.code}}"/>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-lg-2 control-label">所属公司 </label>
+        <div class="col-lg-5">
+            <input type="text" class="form-control" name="company_id" readonly placeholder="所属公司" value="{{user.company.name}}"/>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-lg-2 control-label"></label>
+        <div class="col-lg-5">
+            <button class="btn btn-success  btn-block" type="submit">
+                <b>保存</b>
+            </button>
+        </div>
+    </div>
+</form>
+{% end %}

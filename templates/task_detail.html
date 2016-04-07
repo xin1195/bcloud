@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+{% block title%}
+任务管理
+{% end %}
+
+{% block content %}
+<ol class="breadcrumb">
+    <li><a href="/myTask">任务管理</a></li>
+    <li><a href="/myTask">任务列表</a></li>
+    <li class="active">任务详细</li>
+</ol>
+
+<table class="table table-striped table-hover">
+    <tr class="success">
+        <th> #</th>
+        <th>设备id</th>
+        <th>发送用户</th>
+        <th>发送时间</th>
+        <th>反馈时间</th>
+        <th>反馈数据</th>
+    </tr>
+    {% if my_task_contents %}
+        {% for my_task_content in my_task_contents %}
+        <tr>
+            <td>{{ my_task_contents.index(my_task_content)+1 }}</td>
+            <td>{{ my_task_content.device_id }}</td>
+            <td>{{ my_task_content.from_user }}</td>
+            <td>{{ my_task_content.send_time }}</td>
+            <td>{{ my_task_content.request_time }}</td>
+            <td>{{ my_task_content.request_data }}</td>
+        </tr>
+        {% end %}
+    {% else %}
+        <tr>
+            <td colspan="7">抱歉，没有任务</td>
+        </tr>
+    {% end %}
+</table>
+{% end %}

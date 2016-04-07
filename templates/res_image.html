@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+{% block title%}
+图片资源
+{% end %}
+
+
+{% block content %}
+<ol class="breadcrumb">
+    <li><a href="/res">资源管理</a></li>
+    <li class="active">图片资源</li>
+</ol>
+<a class="btn btn-link" href="/res/image/add" role="button">图片上传</a>
+<table class="table table-striped table-hover">
+    <tr class="success">
+        <th> #</th>
+        <th>缩略图</th>
+        <th>图片名称</th>
+        <th>图片备注</th>
+        <th>新增时间</th>
+        <th>删除</th>
+    </tr>
+    {% if image_resources %}
+        {% for image_resource in image_resources %}
+        <tr>
+            <td>{{ image_resources.index(image_resource)+1 }}</td>
+            <td><img style="max-width: 100px;max-height: 50px" src="{{image_resource.path}}" alt="{{ image_resource.name }}"></td>
+            <td><a href="/res/image/detail?id={{image_resource.id}}">{{ image_resource.name }}</a></td>
+            <td data-toggle="tooltip" title="{{ image_resource.memo }}">{{ image_resource.memo[0:32] }}</td>
+            <td>{{ image_resource.data }}</td>
+            <td><a href="/res/image/delete?id={{image_resource.id}}">删除</a></td>
+        </tr>
+        {% end %}
+    {% else %}
+          <tr>
+              <td colspan="8">抱歉，没有未审批的广告机</td>
+          </tr>
+    {% end %}
+</table>
+{% end %}

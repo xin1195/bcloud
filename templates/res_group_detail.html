@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+
+{% block title%}
+资源组管理
+{% end %}
+
+
+{% block content %}
+<ol class="breadcrumb">
+    <li><a href="/res">资源管理</a></li>
+    <li class="active">资源组管理</li>
+</ol>
+{% if err  %}
+<div class="alert alert-warning alert-dismissible" role="alert">
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+    <strong>Warning!</strong> {{ err }}
+</div>
+{% end %}
+<br>
+<form id="textForm" action="{{ action }}" method="post" class="form-horizontal">
+    {% raw xsrf_form_html() %}
+    <input class="hidden" name="id" value="{{res_group.id}}">
+    <div class="form-group">
+        <label class="col-lg-2 control-label">资源组名称 :</label>
+        <div class="col-lg-8">
+            <input type="text" class="form-control" name="name" value="{{res_group.name}}" maxlength="32"/>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-lg-2 control-label"></label>
+        <div class="col-lg-8">
+            <button class="btn btn-success  btn-block" type="submit">
+                <b>保存</b>
+            </button>
+        </div>
+    </div>
+</form>
+
+{% end %}

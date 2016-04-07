@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+
+{% block title%}
+公司管理
+{% end %}
+
+
+{% block content %}
+<ol class="breadcrumb">
+    <li><a href="/fra/com">公司管理</a></li>
+    <li class="active">公司修改</li>
+</ol>
+{% if err  %}
+    <div class="alert alert-warning alert-dismissible" role="alert">
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      <strong>Warning!</strong> {{ err }}
+    </div>
+{% end %}
+<br>
+<form id="companyForm" action="/fra/com/update" method="post" class="form-horizontal">
+    {% raw xsrf_form_html() %}
+    <div class="form-group">
+        <label class="col-lg-2 control-label">公司名称 <sup>*</sup></label>
+        <div class="col-lg-5">
+            <input type="text" class="form-control" name="name" value="{{company.name}}"/>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-lg-2 control-label">公司代码 <sup>*</sup></label>
+        <div class="col-lg-5">
+            <input type="text" class="form-control" name="code" value="{{company.code}}"/>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-lg-2 control-label">公司地址 <sup>*</sup></label>
+        <div class="col-lg-5">
+            <input type="text" class="form-control" name="address" value="{{company.address}}"/>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-lg-2 control-label">母公司代码 <sup>*</sup></label>
+        <div class="col-lg-5">
+            <input type="text" class="form-control" name="parent" value=" {{company.parent}}"/>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-lg-2 control-label"></label>
+        <div class="col-lg-5">
+            <button class="btn btn-success  btn-block" type="submit">
+                <b>修改</b>
+            </button>
+        </div>
+    </div>
+</form>
+{% end %}
+
+{% include "includes/fra_com_js.html"%}

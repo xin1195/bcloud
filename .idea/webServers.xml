@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="WebServers">
+    <option name="servers">
+      <webServer id="f3304364-f581-4700-9653-a126e0a367d3" name="112.74.204.250" url="http://112.74.204.250">
+        <fileTransfer host="112.74.204.250" port="22" rootFolder="/data/www/lastbcloud" accessType="SFTP" password="dfe8dfcfdfd9dfdedfc5dfc7df9bdf98df99df9edf9fdf9c" username="root">
+          <advancedOptions>
+            <advancedOptions dataProtectionLevel="Private" />
+          </advancedOptions>
+        </fileTransfer>
+      </webServer>
+      <webServer id="5857164a-de21-437f-b16d-0f3bb2639856" name="112.74.16.96" url="http://112.74.16.96">
+        <fileTransfer host="112.74.16.96" port="22" rootFolder="/data/www/lastbcloud" accessType="SFTP" password="dfe8dfcfdfd9dfdedfc5dfc7df9bdf98df99df9edf9fdf9c" username="root">
+          <advancedOptions>
+            <advancedOptions dataProtectionLevel="Private" />
+          </advancedOptions>
+        </fileTransfer>
+      </webServer>
+    </option>
+  </component>
+</project>

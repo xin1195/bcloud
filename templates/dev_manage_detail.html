@@ -1,0 +1,233 @@
+{% extends "base.html" %}
+
+{% block title%}
+广告机详细
+{% end %}
+
+
+{% block content %}
+<ol class="breadcrumb">
+    <li><a href="/dev">广告机</a></li>
+    <li><a href="/dev/manage">广告机管理</a></li>
+    <li class="active">广告机详细</li>
+</ol>
+
+{% if err  %}
+<div class="alert alert-warning alert-dismissible" role="alert">
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+    <strong>Warning!</strong> {{ err }}
+</div>
+{% end %}
+<br>
+<form id="companyForm" action="/dev/manage/detail" method="post" class="form-horizontal">
+    {% raw xsrf_form_html() %}
+    <div class="panel panel-success">
+        <div class="panel-heading">广告机自定义属性</div>
+        <div class="panel-body">
+            <!--第一列-->
+            <div class="col-lg-6">
+                <div class="form-group">
+                    <label class="col-lg-3 control-label">设备名称</label>
+                    <div class="col-lg-8">
+                        <input type="text" class="form-control" name="device_name" value="{{device.device_name}}" maxlength="32"/>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-lg-3 control-label">服务器域名</label>
+                    <div class="col-lg-8">
+                        <input type="text" class="form-control" name="ip" value="{{device.ip}}" readonly/>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-lg-3 control-label">公司编码</label>
+                    <div class="col-lg-8">
+                        <input type="text" readonly class="form-control" name="company" value="{{device.company.code}}" maxlength="32"/>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-lg-3 control-label">设备安装位置</label>
+                    <div class="col-lg-8">
+                        <input type="text" class="form-control" name="device_position" value="{{device.device_position}}" maxlength="32"/>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-lg-3 control-label">设备所属组 </label>
+                    <div class="col-lg-8">
+                        <select class="form-control" name="deviceGroup_id">
+                            {% for device_group in device_groups %}
+                                {% if device_group.id ==device.deviceGroup_id%}
+                                    <option selected value="{{device_group.id}}">{{device_group.name}}</option>
+                                {% else %}
+                                    <option value="{{device_group.id}}">{{device_group.name}}</option>
+                                {% end%}
+                            {% end %}
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-lg-3 control-label">分屏数量</label>
+                    <div class="col-lg-8">
+                        <select class="form-control" name="screen_number">
+                            {% for device_screen_number in device_screen_numbers %}
+                                {% if device_screen_number.value ==device.screen_number%}
+                                    <option selected value="{{device_screen_number.value}}">{{device_screen_number.name}}</option>
+                                {% else %}
+                                    <option value="{{device_screen_number.value}}">{{device_screen_number.name}}</option>
+                                {% end%}
+                            {% end %}
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <!--第二列-->
+            <div class="col-lg-6">
+                <div class="form-group">
+                    <label class="col-lg-3 control-label">设备状态</label>
+                    <div class="col-lg-8">
+                        <input type="text" readonly class="form-control" name="status" value="{{device.status}}" maxlength="32"/>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-lg-3 control-label">服务器端口</label>
+                    <div class="col-lg-8">
+                        <input type="text" class="form-control" name="port" value="{{device.port}}" readonly maxlength="6"/>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-lg-3 control-label">设备用途</label>
+                    <div class="col-lg-8">
+                        <input type="text" class="form-control" name="device_use" value="{{device.device_use}}" maxlength="32"/>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-lg-3 control-label">安装环境</label>
+                    <div class="col-lg-8">
+                        <input type="text" class="form-control" name="ad_environment" value="{{device.ad_environment}}" maxlength="32"/>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-lg-3 control-label">声音设置</label>
+                    <div class="col-lg-8">
+                        <input type="number" class="form-control" name="device_audio" value="{{device.device_audio}}" min="0" max="100"/>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="panel panel-success">
+        <div class="panel-heading">广告机固有属性</div>
+        <div class="panel-body">
+            <!--第一列-->
+            <div class="col-lg-6">
+                <div class="form-group">
+                    <label class="col-lg-3 control-label">设备编码</label>
+                    <div class="col-lg-8">
+                        <input type="text" readonly class="form-control" name="device_id" value="{{device.device_id}}" maxlength="32"/>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-lg-3 control-label">主板型号</label>
+                    <div class="col-lg-8">
+                        <input type="text" readonly class="form-control" name="board_model" value="{{device.board_model}}" maxlength="32"/>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-lg-3 control-label">屏幕尺寸</label>
+                    <div class="col-lg-8">
+                        <input type="text" readonly class="form-control" name="screen_size" value="{{device.screen_size}}" maxlength="32"/>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-lg-3 control-label">cpu型号</label>
+                    <div class="col-lg-8">
+                        <input type="text" readonly class="form-control" name="cpu_model" value="{{device.cpu_model}}" maxlength="32"/>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-lg-3 control-label">内存型号</label>
+                    <div class="col-lg-8">
+                        <input type="text" readonly class="form-control" name="ram_model" value="{{device.ram_model}}" maxlength="32"/>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-lg-3 control-label">mac地址</label>
+                    <div class="col-lg-8">
+                        <input type="text" readonly class="form-control" name="mac_address" value="{{device.mac_address}}" maxlength="32"/>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-lg-3 control-label">供电电压</label>
+                    <div class="col-lg-8">
+                        <input type="text" readonly class="form-control" name="voltage" value="{{device.voltage}}" maxlength="32"/>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-lg-3 control-label">耗电量</label>
+                    <div class="col-lg-8">
+                        <input type="text" readonly class="form-control" name="power_consumption" value="{{device.power_consumption}}" maxlength="32"/>
+                    </div>
+                </div>
+            </div>
+            <!--第二列-->
+            <div class="col-lg-6">
+                <div class="form-group">
+                    <label class="col-lg-3 control-label">设备型号</label>
+                    <div class="col-lg-8">
+                        <input type="text" readonly class="form-control" name="model" value="{{device.model}}" maxlength="32"/>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-lg-3 control-label">屏幕分辨率</label>
+                    <div class="col-lg-8">
+                        <input type="text" readonly class="form-control" name="screen_resolution" value="{{device.screen_resolution}}" maxlength="32"/>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-lg-3 control-label">cpu数量</label>
+                    <div class="col-lg-8">
+                        <input type="text" readonly class="form-control" name="cpu_num" value="{{device.cpu_num}}" maxlength="32"/>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-lg-3 control-label">内存大小</label>
+                    <div class="col-lg-8">
+                        <input type="text" readonly class="form-control" name="ram_size" value="{{device.ram_size}}" maxlength="32"/>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-lg-3 control-label">供电形式</label>
+                    <div class="col-lg-8">
+                        <input type="text" readonly class="form-control" name="power_type" value="{{device.power_type}}" maxlength="32"/>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-lg-3 control-label">是否有喇叭</label>
+                    <div class="col-lg-8">
+                        <input type="text" readonly class="form-control" name="is_horn" value="{{device.is_horn}}" maxlength="16"/>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-lg-3 control-label">广告机生产商</label>
+                    <div class="col-lg-8">
+                        <input type="text" readonly class="form-control" name="manufacturer" value="{{device.manufacturer}}" maxlength="32"/>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <br>
+    <div class="form-group">
+        <label class="col-lg-2 control-label"></label>
+        <div class="col-lg-8">
+            <button class="btn btn-success  btn-block" type="submit">
+                <b>保存并推送</b>
+            </button>
+        </div>
+    </div>
+</form>
+<br><br><br>
+{% end %}

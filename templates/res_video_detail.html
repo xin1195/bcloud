@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+
+{% block title%}
+视频资源
+{% end %}
+
+
+{% block content %}
+<ol class="breadcrumb">
+    <li><a href="/res">资源管理</a></li>
+    <li><a href="/res/video">视频资源</a></li>
+    <li class="active">视频资源详细</li>
+</ol>
+{% if err  %}
+<div class="alert alert-warning alert-dismissible" role="alert">
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+    <strong>Warning!</strong> {{ err }}
+</div>
+{% end %}
+<br>
+<form id="textForm" action="{{action}}" method="post" class="form-horizontal">
+    {% raw xsrf_form_html() %}
+    <input type="hidden" class="form-control" name="id" value="{{video_resource.id}}" readonly/>
+    <div class="form-group">
+        <label class="col-lg-2 control-label"></label>
+        <div class="col-lg-8">
+            <video src="{{video_resource.path}}" controls="controls" style="max-width: 650px;max-height: 550px"></video>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-lg-2 control-label">视频名称 :</label>
+        <div class="col-lg-8">
+            <input type="text" class="form-control" name="name" value="{{video_resource.name}}" maxlength="32"/>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-lg-2 control-label">视频备注 :</label>
+        <div class="col-lg-8">
+            <textarea class="form-control" name="memo" rows="3" maxlength="255">{{video_resource.memo}}</textarea>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-lg-2 control-label"></label>
+        <div class="col-lg-8">
+            <button class="btn btn-success  btn-block" type="submit">
+                <b>保存</b>
+            </button>
+        </div>
+    </div>
+</form>
+{% end %}

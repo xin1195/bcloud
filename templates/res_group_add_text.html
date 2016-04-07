@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+
+{% block title%}
+添加文字资源
+{% end %}
+
+
+{% block content %}
+<ol class="breadcrumb">
+    <li><a href="/res">资源管理</a></li>
+    <li class="active">资源组管理</li>
+</ol>
+<br>
+<form id="textForm" action="/res/group/add/text" method="post" class="form-horizontal">
+    {% raw xsrf_form_html() %}
+    <input class="hidden" name="res_group_id" value="{{res_group_id}}"/>
+    <table class="table table-striped table-hover">
+        <tr class="success">
+            <th> #</th>
+            <th>多选</th>
+            <th>资源名称</th>
+            <th>资源内容</th>
+            <th>资源备注</th>
+            <th>新建时间</th>
+        </tr>
+        {% if res_texts %}
+        {% for res_text in res_texts %}
+        <tr>
+            <td>{{ res_texts.index(res_text)+1 }}</td>
+            <td><input name="res_text_ids"  type="checkbox" id="blankCheckbox" value="{{ res_text.id }}"></td>
+            <td>{{ res_text.name }}</td>
+            <td>{{ res_text.content[0:30] }}</td>
+            <td>{{ res_text.memo[0:30] }}</td>
+            <td>{{ res_text.data }}</td>
+        </tr>
+        {% end %}
+        {% else %}
+        <tr>
+            <td colspan="7">抱歉，没有文字资源</td>
+        </tr>
+        {% end %}
+    </table>
+    <div class="form-group">
+        <label class="col-lg-2 control-label"></label>
+        <div class="col-lg-8">
+            <button class="btn btn-success  btn-block" type="submit">
+                <b>保存</b>
+            </button>
+        </div>
+    </div>
+</form>
+
+{% end %}

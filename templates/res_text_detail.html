@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+
+{% block title%}
+文字资源
+{% end %}
+
+
+{% block content %}
+<ol class="breadcrumb">
+    <li><a href="/res">资源管理</a></li>
+    <li><a href="/res/text">文字资源</a></li>
+    <li class="active">文字资源详细</li>
+</ol>
+{% if err  %}
+<div class="alert alert-warning alert-dismissible" role="alert">
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+    <strong>Warning!</strong> {{ err }}
+</div>
+{% end %}
+<br>
+<form id="textForm" action="{{action}}" method="post" class="form-horizontal">
+    {% raw xsrf_form_html() %}
+    <input type="hidden" class="form-control" name="id" value="{{text_resource.id}}" readonly/>
+    <div class="form-group">
+        <label class="col-lg-2 control-label">资源名称 :</label>
+        <div class="col-lg-8">
+            <input type="text" class="form-control" name="name" value="{{text_resource.name}}" maxlength="32"/>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-lg-2 control-label">资源内容 :</label>
+        <div class="col-lg-8">
+            <textarea class="form-control" name="content" rows="5" maxlength="255">{{text_resource.content}}</textarea>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-lg-2 control-label">资源备注 :</label>
+        <div class="col-lg-8">
+            <textarea class="form-control" name="memo" rows="5" maxlength="255">{{text_resource.memo}}</textarea>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-lg-2 control-label"></label>
+        <div class="col-lg-8">
+            <button class="btn btn-success  btn-block" type="submit">
+                <b>保存</b>
+            </button>
+        </div>
+    </div>
+</form>
+{% end %}

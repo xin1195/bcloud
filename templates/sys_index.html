@@ -1,0 +1,74 @@
+{% extends "base.html" %}
+
+{% block title%}
+首页
+{% end %}
+
+
+{% block content %}
+
+{% for device_group in device_groups %}
+<div class="panel panel-success">
+    <div class="panel-heading">
+        <h3 class="panel-title">{{device_group.name}}</h3>
+    </div>
+    <div class="panel-body">
+        <div class="row">
+            {% for device in device_group.device %}
+            <div class="col-sm-4 col-md-2">
+                <div class="thumbnail">
+                    <img src="{{ static_url('img/1.jpg') }}" alt="...">
+                    <div class="caption">
+                        <h4>{{ device.device_id }}</h4>
+                        <p>{{ device.device_name }}</p>
+                        <div class="row">
+                            <div class="col-lg-6">
+                                声音调节
+                            </div>
+                            <div class="col-lg-6">
+                                <select class="form-control">
+                                    {% for s in range(0,100,1) %}
+                                        <option value="{{device.device_id}}|_audio_|{{s}}">{{s}}</option>
+                                    {% end %}
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% end %}
+        </div>
+    </div>
+</div>
+{% end %}
+    <h1>index</h1>
+        <div id="msgBox" style="width:400px;height:300px;border:1px solid #000000"></div>
+        <div>
+            hello
+            <input id="chat">
+            <button  onclick="send1()">send</button>
+        </div>
+{% end %}
+
+{% block bottom-js %}
+    <script type="text/javascript">
+        var ws = new WebSocket("ws://112.74.204.250/api/userSocket?user111=liuxin");
+        ws.onopen = function() {
+           ws.send("Hello, world");
+        };
+        ws.onmessage = function (event) {
+            $('#msgBox').append(JSON.parse(event.data)["message"]);
+            $('#msgBox').append('</br>');
+            $('#msgBox').append('</br>');
+        }
+        function send1() {
+            //如果要向某个客户端发送消息：某个客户端的id`内容
+            ws.send($("#chat").val());
+            $("#chat").val("");
+        }
+        $('.form-control').change(function () {
+            alert($(this).select().val());
+            ws.send($(this).select().val());
+        });
+    </script>
+{% end %}

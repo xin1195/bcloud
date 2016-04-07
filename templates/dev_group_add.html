@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+
+{% block title%}
+广告机组
+{% end %}
+
+
+{% block content %}
+<ol class="breadcrumb">
+    <li><a href="/dev">广告机</a></li>
+    <li><a href="/dev/group?device_group_id=">广告机组</a></li>
+    <li class="active">新增</li>
+</ol>
+{% if msg  %}
+<div class="alert alert-warning alert-dismissible" role="alert">
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+    <strong>Warning!</strong> {{ msg }}
+</div>
+{% end %}
+<br>
+<form id="companyForm" action="{{ action }}" method="post" class="form-horizontal">
+    {% raw xsrf_form_html() %}
+    <input class="hidden" value="{{device_group.id}}" name="device_group_id"/>
+    <div class="form-group">
+        <label class="col-lg-2 control-label">设备组名 </label>
+        <div class="col-lg-5">
+            <input type="text" class="form-control" name="name" placeholder="设备组名" value="{{device_group.name}}" maxlength="32"/>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-lg-2 control-label">资源组 </label>
+        <div class="col-lg-5">
+            <select class="form-control" name="res_group_id">
+                {% for res_group in res_groups %}
+                    {% if device_group.resGroup_id == res_group.id %}
+                        <option selected value="{{res_group.id}}">{{res_group.name}}</option>
+                    {% else %}
+                        <option value="{{res_group.id}}">{{res_group.name}}</option>
+                    {% end%}
+                {% end %}
+            </select>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-lg-2 control-label">定时开关机 </label>
+        <div class="col-lg-5">
+            <select class="form-control" name="device_time_switch_id">
+                {% for device_time_switch in device_time_switches %}
+                    {% if device_group.device_time_switch_id == device_time_switch.id %}
+                        <option selected="selected" value="{{device_time_switch.id}}">{{device_time_switch.name}}</option>
+                    {% else %}
+                        <option value="{{device_time_switch.id}}">{{device_time_switch.name}}</option>
+                    {% end%}
+                {% end %}
+            </select>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-lg-2 control-label"></label>
+        <div class="col-lg-5">
+            <button class="btn btn-success  btn-block" type="submit">
+                <b>保存</b>
+            </button>
+        </div>
+    </div>
+</form>
+ 
+{% end %}

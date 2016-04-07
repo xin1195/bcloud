@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+
+{% block title%}
+广告机管理
+{% end %}
+
+
+{% block content %}
+<ol class="breadcrumb">
+    <li><a href="/dev">广告机</a></li>
+    <li class="active">广告机管理</li>
+</ol>
+<table class="table table-striped table-hover">
+    <tr class="success">
+        <th> #</th>
+        <th>设备编码</th>
+        <th>设备名称</th>
+        <th>设备安装位置</th>
+        <th>所属公司代码</th>
+        <th>所属组</th>
+        <th>操作</th>
+    </tr>
+    {% if devices %}
+        {% for device in devices %}
+        <tr>
+            <td>{{ devices.index(device)+1}} </td>
+            <td><a href="/dev/manage/detail?device_id={{ device.device_id }}">{{ device.device_id }}</a></td>
+            <td>{{ device.device_name }}</td>
+            <td>{{ device.device_position }}</td>
+            <td>{{ device.company.code }}</td>
+            <td>
+                {% if device.deviceGroup%}
+                    {{ device.deviceGroup.name }}
+                {% else%}
+                    <span style="color: red">无设备组</span>
+                {% end%}
+            </td>
+            <td>
+                <li class="dropdown" style="list-style-type:none;">
+                    <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"> 操作 </a>
+                    <ul class="dropdown-menu dropdown-menu-right">
+                        <li><a href="/myTask/deviceRestart?device_id={{ device.device_id }}" >设备重启</a></li>
+                        <!--<li role="separator" class="divider"></li>-->
+                        <!--<li><a href="#" >设备截屏</a></li>-->
+                    </ul>
+                </li>
+            </td>
+        </tr>
+        {% end %}
+    {% else %}
+          <tr>
+              <td colspan="8">抱歉，没有已审批的广告机</td>
+          </tr>
+    {% end %}
+</table>
+
+
+
+{% end %}

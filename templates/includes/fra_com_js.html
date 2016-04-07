@@ -1,0 +1,74 @@
+{% block bottom-js %}
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#companyForm').bootstrapValidator({
+            message: 'This value is not valid',
+            feedbackIcons: {
+                valid: 'glyphicon glyphicon-ok',
+                invalid: 'glyphicon glyphicon-remove',
+                validating: 'glyphicon glyphicon-refresh'
+            },
+            fields: {
+                company_name: {
+                    message: "公司名称没有验证",
+                    validators: {
+                        notEmpty: {
+                            'message': "公司名称不能为空"
+                        },
+                        stringLength: {
+                            min: 3,
+                            max: 32,
+                            message: '公司名称必须在3位到32位之间'
+                        },
+
+                    }
+                },
+                company_code: {
+                    message: "公司代码没有验证",
+                    validators: {
+                        notEmpty: {
+                            'message': "公司代码不能为空"
+                        },
+                        stringLength: {
+                            min: 3,
+                            max: 11,
+                            message: '公司代码必须在3位到11位之间'
+                        },
+                        regexp: {
+                            regexp: /^[a-zA-Z0-9]+$/,
+                            message: '公司代码只能为字母，数子'
+                        },
+                    }
+                },
+                company_address: {
+                    message: "公司地址没有验证",
+                    validators: {
+                        notEmpty: {
+                            'message': "公司地址不能为空"
+                        },
+                        stringLength: {
+                            min: 6,
+                            max: 64,
+                            message: '公司地址必须在6位到64位之间'
+                        },
+                    }
+                },
+                company_parent: {
+                    message: "母公司代码没有验证",
+                    validators: {
+                        stringLength: {
+                            min: 3,
+                            max: 11,
+                            message: '母公司代码必须在3位到11位之间'
+                        },
+                        regexp: {
+                            regexp: /^[a-zA-Z0-9]+$/,
+                            message: '母公司代码码只能为字母，数子'
+                        },
+                    }
+                },
+            }
+        });
+    });
+</script>
+{% end %}

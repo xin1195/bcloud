@@ -1,0 +1,76 @@
+{% extends "base.html" %}
+
+{% block title%}
+定时开关机
+{% end %}
+
+
+{% block content %}
+<ol class="breadcrumb">
+    <li><a href="/dev">广告机</a></li>
+    <li class="active">定时开关机</li>
+</ol>
+<a class="btn btn-link" href="/dev/timeSwitch/add" role="button">新建</a>
+<br>
+<div class="col-lg-3">
+    <div class="list-group">
+        <a href="#" class="list-group-item active">
+            定时开关机
+        </a>
+        {% if device_time_switches %}
+            {% for device_time_switch in device_time_switches %}
+                <div class="list-group-item">
+                    <a href="/dev/timeSwitch?device_time_switch_id={{device_time_switch.id}}">{{ device_time_switch.name }}</a>
+                    <a href="/dev/timeSwitch/delete?device_time_switch_id={{device_time_switch.id}}" data-toggle="tooltip" title="删除" style="float: right"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>
+                    <a href="/dev/timeSwitch/update?device_time_switch_id={{device_time_switch.id}}" data-toggle="tooltip" title="修改" style="margin-right: 7px;float: right"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a>
+                    <a href="/myTask/send_time_switch?device_time_switch_id={{device_time_switch.id}}" data-toggle="tooltip" title="推送定时开关机" style="margin-right: 7px; float: right"><span class="glyphicon glyphicon-save" aria-hidden="true"></span></a>
+                </div>
+            {% end %}
+        {% else %}
+            <a href="#" class="list-group-item">无定时开关机任务</a>
+        {% end %}
+    </div>
+</div>
+<div class="col-lg-9">
+    {% if device_weeks %}
+        {% for device_week in device_weeks %}
+            <!--星期几-->
+            <div class="panel panel-success">
+                <div class="panel-heading">
+                    <span class="glyphicon glyphicon-list"> {{device_week.name}}</span>
+                    <span style="float: right"><a href="/dev/day/add?device_week_id={{device_week.id}}" ><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> 新增定时控制</a></span>
+                </div>
+                <div class="panel-body">
+                    <table class="table table-striped table-hover">
+                        {% if device_week.device_day %}
+                            {% for device_day in device_week.device_day %}
+                                <tr>
+                                    <td>{{ device_week.device_day.index(device_day)+1 }}</td>
+                                    <td><a href="/dev/day/update?device_day_id={{device_day.id}}&device_week_id={{device_week.id}}">{{ device_day.name }}</a></td>
+                                    <td>{{ device_day.time }}</td>
+                                    <td>
+                                        {% if device_day.screen=='open'%}
+                                            开
+                                        {% else %}
+                                            关
+                                        {% end %}
+                                    </td>
+                                    <td><a href="/dev/day/delete?device_day_id={{device_day.id}}&device_week_id={{device_week.id}}">删除</a></td>
+                                </tr>
+                            {% end %}
+                        {% else %}
+                            <tr>
+                                <td colspan="5">抱歉，无定时控制</td>
+                            </tr>
+                        {% end %}
+                    </table>
+                </div>
+            </div>
+        {% end %}
+    {% else %}
+        <tr>
+            <td colspan="5">无定时开关机</td>
+        </tr>
+    {% end %}
+</div>
+{% end %}

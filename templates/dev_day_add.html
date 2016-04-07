@@ -1,0 +1,74 @@
+{% extends "base.html" %}
+
+{% block title%}
+定时控制
+{% end %}
+
+{% block content %}
+<ol class="breadcrumb">
+    <li><a href="/dev">广告机</a></li>
+    <li><a href="/dev/timeSwitch?device_time_switch_id={{device_time_switch_id}}">定时开关机</a></li>
+    <li class="active">定时控制</li>
+</ol>
+<br>
+<form id="companyForm" action="{{ action }}" method="post" class="form-horizontal">
+    {% raw xsrf_form_html() %}
+    <input class="hidden" value="{{device_day.id}}" name="id"/>
+    <input class="hidden" value="{{device_time_switch_id}}" name="device_time_switch_id"/>
+    <input class="hidden" value="{{device_week_id}}" name="device_week_id"/>
+    <div class="form-group">
+        <label class="col-lg-2 control-label">定时控制名 </label>
+        <div class="col-lg-5">
+            <input type="text" class="form-control" name="name" placeholder="开关机名" value="{{device_day.name}}" maxlength="32"/>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-lg-2 control-label">时间 </label>
+        <div class="col-lg-5 form-inline">
+            <select class="form-control" name="hour">
+                {% for h in range(0,24,1) %}
+                    {% if int(time_list[0]) == h %}
+                        <option value="{{h}}" selected="selected">{{h}}</option>
+                    {% else %}
+                        <option value="{{h}}">{{h}}</option>
+                    {% end %}
+                {% end %}
+            </select>
+            <span>时</span>
+            <select class="form-control" name="second">
+                {% for s in range(0,60,1) %}
+                    {% if int(time_list[1]) == s %}
+                        <option value="{{s}}" selected="selected">{{s}}</option>
+                    {% else %}
+                        <option value="{{s}}">{{s}}</option>
+                    {% end %}
+                {% end %}
+            </select>
+            <span>分</span>
+        </div>
+
+    </div>
+    <div class="form-group">
+        <label class="col-lg-2 control-label">屏幕开/关 </label>
+        <div class="col-lg-5">
+            <select class="form-control" name="screen">
+                {% if device_day.screen == "open" %}
+                    <option value="open" selected>开</option>
+                    <option value="close">关</option>
+                {% else %}
+                    <option value="open">开</option>
+                    <option value="close" selected>关</option>
+                {% end%}
+            </select>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-lg-2 control-label"></label>
+        <div class="col-lg-5">
+            <button class="btn btn-success  btn-block" type="submit">
+                <b>保存</b>
+            </button>
+        </div>
+    </div>
+</form>
+{% end %}

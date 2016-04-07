@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+
+{% block title%}
+网站资源
+{% end %}
+
+
+{% block content %}
+<ol class="breadcrumb">
+    <li><a href="/res">资源管理</a></li>
+    <li class="active">网站资源</li>
+</ol>
+<a class="btn btn-link" href="/res/web/add" role="button">新增</a>
+<!--列表-->
+<table class="table table-striped table-hover">
+    <tr class="success">
+        <th> # </th>
+        <th>资源名称</th>
+        <th>资源内容</th>
+        <th>资源备注</th>
+        <th>新建时间</th>
+        <th>删除</th>
+    </tr>
+    {% if web_resources %}
+        {% for web_resource in web_resources %}
+        <tr>
+            <td>{{ web_resources.index(web_resource)+1 }} </td>
+            <td><a href="/res/web/detail?id={{web_resource.id}}">{{ web_resource.name }}</a></td>
+            <td data-toggle="tooltip" title="{{ web_resource.content }}">{{ web_resource.content[0:30] }}</td>
+            <td data-toggle="tooltip" title="{{ web_resource.memo }}">{{ web_resource.memo[0:30] }}</td>
+            <td>{{ web_resource.data }}</td>
+            <td><a href="/res/web/delete?id={{web_resource.id}}">删除</a></td>
+        </tr>
+        {% end %}
+    {% else %}
+          <tr>
+              <td colspan="7">抱歉，没有文字资源</td>
+          </tr>
+    {% end %}
+</table>
+
+{% end %}
